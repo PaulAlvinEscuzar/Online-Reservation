@@ -24,8 +24,26 @@
     </style>
 </head>
 <?php 
+$already = 0;
 include '../includes/header.php';
 include '../includes/db.php';
+
+if(isset($_POST['add_cart'])){
+    $productname = $_POST['pname'];
+    $productprice = $_POST['price'];
+    $productquan = $_POST['quan'];
+    $productimage = $_POST['product_image'];
+    
+    $query = "SELECT * FROM shopcart WHERE ProductName = '$productname'";
+    $select = mysqli_query($conn, $query);
+    if(mysqli_num_rows($select)>0){
+        header("Location: ../student/home.php?errormessage=The Product Added to Cart Successfully");
+    }else{
+        $query = "INSERT INTO shopcart(ProductName, Price, image, Quantity) VALUES ('{$productname}','{$productprice}','{$productimage}','{$productquan}')";
+        $add2cart = mysqli_query($conn, $query);
+        header("Location: ../student/home.php?message=The Product Added to Cart Successfully");
+    }
+}
 ?>
 
 
@@ -36,6 +54,12 @@ if (isset($_SESSION['prog_sec'])) {
     ?>
 <body>
 <div class="container">
+<?php if (isset($_GET['message'])) { ?>
+            <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
+        <?php } ?>
+        <?php if (isset($_GET['errormessage'])) { ?>
+            <p class="text-center bg-danger-subtle p-4 mt-3 error"><?php echo $_GET['errormessage']; ?></p>
+        <?php } ?>
     <div class="row-mt-5">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
@@ -51,7 +75,7 @@ if (isset($_SESSION['prog_sec'])) {
                     <a class="nav-link me-3" href="#"><h4><i class="bi bi-envelope-fill"></i></h4></a>
                     <a class="nav-link me-3" href="#"><h4><i class="bi bi-people-fill"></i></h4></a>
                     <div class="container">
-                    <a type="button" class="me-3 btn btn-outline-success btn-rounded w-100" href="#"><h4><i class="bi bi-cart-fill"></i></h4></a>
+                    <a type="button" class="me-3 btn btn-outline-success btn-rounded w-100" href="../student/shopcart.php"><h4><i class="bi bi-cart-fill"></i></h4></a>
                     </div>
                 </div>
             </div>
@@ -111,7 +135,7 @@ if(mysqli_num_rows($display) > 0){
         <div class="col-lg-4 bg-white m-auto border border-danger-subtle mt-5 mb-5">
             <form action="" method="post">
                 <div class="container-lg d-flex justify-content-center p-3 bg-light">
-                    <img src="../uploadedimg/<?php echo "$pimage"; ?>" height="200">
+                <img src="../uploadedimg/<?php echo "$pimage"; ?>" height="200">
                 </div>
                 <input type="hidden" name="update_id" value="<?php echo $row['ProductID']; ?>">
                 <div class="input-group mb-3 ps-3 pe-3">
@@ -126,6 +150,7 @@ if(mysqli_num_rows($display) > 0){
                     <span class="input-group-text">Quantity</span>
                     <input type="number"  min="1" value="1" class="form-control"  name="quan" >
                 </div>
+                <input type="hidden" name="product_image" value="<?php echo "$pimage";?>">
                 <div class="container d-grid">
                     <input type="submit" value = "Add to Cart" class="btn btn-success mb-3" name="add_cart">
                     <a href="#"class="btn btn-warning mb-2" id="close_edit">Cancel</a>
