@@ -178,6 +178,7 @@ if(isset($_POST['update_product'])){
     </section>
     </div>
 </div>
+
 </body>
 <script>
     document.querySelector('#close_edit').onclick = () =>{

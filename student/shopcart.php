@@ -1,7 +1,50 @@
 <?php
 include('../includes/db.php');
 include('../includes/header.php');
+// this is for session 
+session_start();
 
+if (isset($_SESSION['SR_Code'])) {
+
+// For Check Out button
+if(isset($_GET['checkout'])){
+    $total = $_GET['checkout'];
+    $status = "For approval";
+    $date = date('Y-m-d H:i:s');
+    $srcode = $_SESSION['SR_Code'];
+    $order_query= "INSERT INTO orderdb(SR_Code, Orderdate, Status) VALUES('{$srcode}','{$date}','{$status}')";
+    if(mysqli_query($conn,$order_query)){
+        $orderID = mysqli_insert_id($conn);
+
+        // select for db shopcart
+        $query = "SELECT * FROM shopcart";
+        $select = mysqli_query($conn,$query);
+
+        while($row = mysqli_fetch_assoc($select)){
+            $productid = $row['ProductID'];
+            $quan = $row['Quantity'];
+
+            // select for db productdb
+            $product_query = "SELECT Price FROM productdb WHERE ProductID = $productid";
+            $product = mysqli_query($conn,$product_query);
+            
+            if ($product && $product_row = mysqli_fetch_assoc($product)) {
+                $price = $product_row['Price'];
+
+                // Insert into orderitems
+                $orderitem_query = "INSERT INTO orderitems(OrderID, ProductID, Price, Quantity, TotalPrice) VALUES('$orderID', '$productid', '$price', '$quan', '$total')";
+                $order = mysqli_query($conn, $orderitem_query);
+
+                if ($order) {
+                    header("Location: ../student/home.php?message=Thankyou for Reserving, Your Order is now For Approval");
+                    $delete_query = "DELETE FROM shopcart WHERE SR_Code = '$srcode'";
+                    $delete = mysqli_query($conn,$delete_query);
+                }
+        }
+    }
+}
+}
+// For updating the quantity of Product
 if(isset($_POST['update_product'])){
     $id = $_POST['up_quan_id'];
     $up_quan = $_POST['up_quan'];
@@ -16,6 +59,10 @@ if(isset($_POST['update_product'])){
 ?>
 
 <div class="container">
+<!--Displaying message to user-->
+<?php if (isset($_GET['message'])) { ?>
+            <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
+        <?php } ?>
     <div class="row-mt-5">
     <!--nav bar-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -61,7 +108,16 @@ if(isset($_POST['update_product'])){
 
             if(mysqli_num_rows($display)>0){
                 while($row = mysqli_fetch_assoc($display)){
-                    $pimage = $row['image'];
+                    $productID = $row['ProductID'];
+                    $quan = $row['Quantity'];
+                    $cartid = $row['CartID'];
+                    $product_sql = "SELECT ProductName, Price, image FROM productdb WHERE ProductID = '$productID'";
+                    $select_product = mysqli_query($conn,$product_sql);
+
+                    if(mysqli_num_rows($select_product)>0){
+                        while($row = mysqli_fetch_assoc($select_product)){
+                            $pimage = $row['image'];
+
             ?>
                     <tr>
                         <td><img src="../uploadedimg/<?php echo "$pimage";?>" height="108px"></td>
@@ -69,9 +125,9 @@ if(isset($_POST['update_product'])){
                         <td><?php echo $row['Price']?></td>
                         <td>
                             <form action="" method="POST">
-                                    <input type="hidden" value="<?php echo $row['CartID']?>" name="up_quan_id">
+                                    <input type="hidden" value="<?php echo $cartid?>" name="up_quan_id">
                                 <div class="input-group mb-3">
-                                    <input type="number" min="1" value="<?php echo $row['Quantity']?>" name="up_quan" class="text-center p-1">
+                                    <input type="number" min="1" value="<?php echo $quan?>" name="up_quan" class="text-center p-1">
                                 </div>
                                 <td>
                                 <div class="container d-grid">
@@ -80,13 +136,16 @@ if(isset($_POST['update_product'])){
                                 </td>
                             </form>
                         </td>
-                        <td>&#8369;<?php echo $subtotal =  $row['Price'] * $row['Quantity']?>.00</td>
+                        <!--For the pricing of product-->
+                        <td>&#8369;<?php echo $subtotal =  $row['Price'] * $quan?>.00</td>
                         <td class="text-center">
                             <a href="" class='btn btn-success'>Delete</a>
                         </td>
                     </tr>
             <?php
             $total += $subtotal;
+        }
+    }
                 };
             };
             ?>
@@ -94,10 +153,17 @@ if(isset($_POST['update_product'])){
                 <td colspan="5" class="pt-3 pb-3"><h3 class="text-center text-monospace">Total:</h3></td>
                 <td><h3 class="text-center text-monospace">&#8369;<?php echo $total?>.00</h3></td>
                 <td class="text-center">
-                            <a href="" class='btn btn-outline-danger mt-2' name="done_shop">Done Shopping</a>
+                            <a href="../student/shopcart.php?checkout=<?php echo $total;?>" class='btn btn-outline-danger mt-2' name="done_shop">Done Shopping</a>
                         </td>
             </tr>
         </tbody>
     </table>
+    <!--End of the table-->
     </div>
 </div>
+<?php
+}else {
+        header('Location:login.php');
+        exit();
+    }
+?>

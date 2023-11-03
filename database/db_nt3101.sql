@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2023 at 11:44 AM
+-- Generation Time: Nov 03, 2023 at 02:25 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -40,10 +40,24 @@ CREATE TABLE `admindb` (
 
 CREATE TABLE `orderdb` (
   `OrderID` int(100) NOT NULL,
+  `SR_Code` varchar(100) NOT NULL,
+  `Orderdate` date NOT NULL,
+  `Status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderitems`
+--
+
+CREATE TABLE `orderitems` (
+  `OrderItemID` int(11) NOT NULL,
+  `OrderID` int(100) NOT NULL,
   `ProductID` int(100) NOT NULL,
-  `SR-Code` varchar(100) NOT NULL,
-  `Quantity` int(20) NOT NULL,
-  `Price` int(20) NOT NULL
+  `Price` int(100) NOT NULL,
+  `Quantity` int(100) NOT NULL,
+  `TotalPrice` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -53,7 +67,7 @@ CREATE TABLE `orderdb` (
 --
 
 CREATE TABLE `productdb` (
-  `ProductID` int(11) NOT NULL,
+  `ProductID` int(100) NOT NULL,
   `ProductName` varchar(255) NOT NULL,
   `Price` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL
@@ -76,7 +90,7 @@ INSERT INTO `productdb` (`ProductID`, `ProductName`, `Price`, `image`) VALUES
 
 CREATE TABLE `shopcart` (
   `CartID` int(11) NOT NULL,
-  `SR-Code` varchar(255) NOT NULL,
+  `SR_Code` varchar(100) NOT NULL,
   `ProductID` int(100) NOT NULL,
   `Quantity` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -135,7 +149,16 @@ ALTER TABLE `admindb`
 -- Indexes for table `orderdb`
 --
 ALTER TABLE `orderdb`
-  ADD PRIMARY KEY (`OrderID`);
+  ADD PRIMARY KEY (`OrderID`),
+  ADD KEY `SR-Code` (`SR_Code`);
+
+--
+-- Indexes for table `orderitems`
+--
+ALTER TABLE `orderitems`
+  ADD PRIMARY KEY (`OrderItemID`),
+  ADD KEY `OrderID` (`OrderID`),
+  ADD KEY `ProductID` (`ProductID`);
 
 --
 -- Indexes for table `productdb`
@@ -169,25 +192,48 @@ ALTER TABLE `trackorder`
 -- AUTO_INCREMENT for table `orderdb`
 --
 ALTER TABLE `orderdb`
-  MODIFY `OrderID` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `OrderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+
+--
+-- AUTO_INCREMENT for table `orderitems`
+--
+ALTER TABLE `orderitems`
+  MODIFY `OrderItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `productdb`
 --
 ALTER TABLE `productdb`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ProductID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `shopcart`
 --
 ALTER TABLE `shopcart`
-  MODIFY `CartID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `CartID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `trackorder`
 --
 ALTER TABLE `trackorder`
   MODIFY `TrackID` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orderdb`
+--
+ALTER TABLE `orderdb`
+  ADD CONSTRAINT `SR-Code` FOREIGN KEY (`SR_Code`) REFERENCES `student_record` (`SR_Code`);
+
+--
+-- Constraints for table `orderitems`
+--
+ALTER TABLE `orderitems`
+  ADD CONSTRAINT `OrderID` FOREIGN KEY (`OrderID`) REFERENCES `orderdb` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ProductID` FOREIGN KEY (`ProductID`) REFERENCES `productdb` (`ProductID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

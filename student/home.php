@@ -23,36 +23,33 @@
         }
     </style>
 </head>
+<body>
+<?php
+session_start();
+
+if (isset($_SESSION['prog_sec'])) {
+    ?>
 <?php 
 $already = 0;
 include '../includes/header.php';
 include '../includes/db.php';
 
 if(isset($_POST['add_cart'])){
-    $productname = $_POST['pname'];
-    $productprice = $_POST['price'];
-    $productquan = $_POST['quan'];
-    $productimage = $_POST['product_image'];
+    $productID = $_POST['update_id'];
+    $srcode = $_SESSION['SR_Code'];
+    $quan = $_POST['quan'];
     
-    $query = "SELECT * FROM shopcart WHERE ProductName = '$productname'";
+    $query = "SELECT * FROM shopcart WHERE ProductID = '$productID'";
     $select = mysqli_query($conn, $query);
     if(mysqli_num_rows($select)>0){
         header("Location: ../student/home.php?errormessage=The Product Added to Cart Successfully");
     }else{
-        $query = "INSERT INTO shopcart(ProductName, Price, image, Quantity) VALUES ('{$productname}','{$productprice}','{$productimage}','{$productquan}')";
+        $query = "INSERT INTO shopcart(SR_Code,ProductID,Quantity) VALUES ('{$srcode}','{$productID}','{$quan}')";
         $add2cart = mysqli_query($conn, $query);
         header("Location: ../student/home.php?message=The Product Added to Cart Successfully");
     }
 }
 ?>
-
-
-<?php
-session_start();
-
-if (isset($_SESSION['prog_sec'])) {
-    ?>
-<body>
 <div class="container">
 <?php if (isset($_GET['message'])) { ?>
             <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
