@@ -100,8 +100,7 @@ include('../includes/header.php');
                                 $productid = $product_row['ProductID'];
                                 $quantity = $product_row['Quantity'];
                                 $totalprice = $product_row['TotalPrice'];
-                                $total += $totalprice;
-                                
+
                                 $product_query = "SELECT * FROM productdb WHERE ProductID = '$productid';";
                                 $view_product = mysqli_query($conn, $product_query);
 
