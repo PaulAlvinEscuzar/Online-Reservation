@@ -27,7 +27,7 @@ include('../includes/header.php');?>
         <div class="container d-flex">
             <div class="container text-center mt-3 mb-3">
                 <input type="submit" class="btn btn-primary me-3" value="Login">
-                <a href="#"class="btn btn-warning">Back</a>
+                <a href="../selection/selection.php"class="btn btn-warning">Back</a>
             </div>
         </div>
         </form>

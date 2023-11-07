@@ -169,11 +169,11 @@ if(isset($_POST['update_product'])){
                 </div>
                 <input type="hidden" name="update_id" value="<?php echo $row['ProductID']; ?>">
                 <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                    <span class="input-group-text"><i class="bi bi-cart4"></i></span>
                     <input type="text" class="form-control" required value="<?php echo $row['ProductName']?>" name="up_pname" SS>
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                    <span class="input-group-text">Price</span>
                     <input type="number" min="0" required  class="form-control" value="<?php echo $row['Price']?>" name="up_price" >
                 </div>
                 <div class="input-group mb-3">

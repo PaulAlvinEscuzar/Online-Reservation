@@ -122,7 +122,7 @@ if(isset($_POST['update_product'])){
                     <tr>
                         <td><img src="../uploadedimg/<?php echo "$pimage";?>" height="108px"></td>
                         <td><?php echo $row['ProductName']?></td>
-                        <td><?php echo $row['Price']?></td>
+                        <td>&#8369;<?php echo $row['Price']?>.00</td>
                         <td>
                             <form action="" method="POST">
                                     <input type="hidden" value="<?php echo $cartid?>" name="up_quan_id">
