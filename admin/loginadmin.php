@@ -1,38 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Shopping</title>
-    <link rel="stylesheet" href="loginstyle.css">
-</head>
-<body>
-    <header>
-        <div class="logo-header">
-            <img src="img/bsu_logo.png" alt="" style="margin-left: 20px;">
-        </div>
-        <h1>Batangas State University</h1>
-        <div class="logo-header">
-            <img src="img/cics_logo.jpg" alt="" style="padding-right:20px;margin-right: 20px;">
-        </div>
-    </header>
-    <div class="container">
-        <div class="logo">
-            <img src="img/bsu_logo.png"alt="">
-        </div>
-        <div class="container-login">
-            <h1 style="margin-bottom:5px;">Admin Login</h1>
-            <form method="POST">
-                <label for="username">Username:</label><br>
-                <input type="text" name="username" id="username"><br>
-                <label for="pass">Password:</label><br>
-                <input type="text" name="pass" id="pass"><br>
-                <a href="#">Register</a><br>
-                <input type="submit" id="submit" name="submit" value="Login">
-            </form>
-        </div>
+<?php include('../includes/db.php');
+include('../includes/header.php');?>
 
+
+<div class="container">
+    <div class="row-mt-5">
+    <h1 class="text-center mt-3">Online Reservation</h1>
+    <h1 class="text-center">Admin Portal</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="container mt-5">
+            <img src="../img/bsu_logo.png" width="400px" class="me-auto" alt="">
+            </div>
+
+            <div class="container bg-light border-top border-danger mt-5">
+            <form action="../admin/login.php" method="post">
+                <?php if (isset($_GET['error'])) { ?>
+                <p class="text-center bg-danger-subtle p-4 mt-3 error"><?php echo $_GET['error']; ?></p>
+            <?php } ?>
+            <div class="input-group mb-3 mt-5 ps-5 pe-5 ">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Admin ID" aria-label="Admin ID" aria-describedby="basic-addon1" name="adminid">
+            </div>
+        <div class="input-group mb-3 ps-5 pe-5">
+            <span class="input-group-text" id="basic-addon1" style="width:45px ;">P</span>
+            <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" name="password">
+            </div>
+        <div class="container d-flex">
+            <div class="container text-center mt-3 mb-3">
+                <input type="submit" class="btn btn-primary me-3" value="Login">
+                <a href="#"class="btn btn-warning">Back</a>
+            </div>
+        </div>
+        </form>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>

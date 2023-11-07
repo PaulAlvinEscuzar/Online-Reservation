@@ -5,6 +5,7 @@
     <title>Online Shopping</title>
     <link rel="stylesheet" href="../includes/bootstrap.css">
     <link rel="stylesheet" href="../includes/font.css">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.png">
     <script src="../includes/popper.js"></script>
     <script src="../includes/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

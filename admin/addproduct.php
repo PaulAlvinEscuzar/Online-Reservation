@@ -67,12 +67,28 @@ if(isset($_POST['update_product'])){
     }
 }
 ?>
-<body>
-<div class="container-lg">
-<?php if (isset($_GET['message'])) { ?>
+<div class="container">
+    <div class = "row-mt-5">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-3" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="mx-auto"></div>
+                <div class="navbar-nav">
+                    <a class="nav-link me-3" href="../admin/admin.php"><h4>Home</h4></a>
+                    <a class="nav-link active me-3 btn btn-outline-primary btn-rounded text-wrap" style="color:white ;" aria-current="page"  href="../admin/addproduct.php"><h4> Add Product</h4></a>
+                    <a class="nav-link me-3" href="../admin/customerDetails.php"><h4> Customer Details</h4></a>
+                    <a class="nav-link me-3" href="../admin/orders.php"><h4> Orders</h4></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <?php if (isset($_GET['message'])) { ?>
             <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
         <?php } ?>
-    <div class="row-mt-5">
         <div class="col-lg-4 bg-white m-auto border border-danger-subtle mt-5">
             <form action="" method="post" enctype="multipart/form-data">
                 <h3 class="text-center">Add New Product</h3>
@@ -124,7 +140,6 @@ if(isset($_POST['update_product'])){
                         </td>
                         <td class="text-center">
                             <a href="../admin/addproduct.php?edit=<?php echo $row['ProductID'];?>" class='btn btn-success' onclick="scrollToEditForm()">Update</a>
-                            <button id="update-btn"></button>
                         </td>
                     </tr>
                 <?php    
@@ -176,10 +191,8 @@ if(isset($_POST['update_product'])){
     };
         ?>
     </section>
-    </div>
 </div>
-
-</body>
+</div>
 <script>
     document.querySelector('#close_edit').onclick = () =>{
         document.querySelector('.edit-form').style.display = 'none';

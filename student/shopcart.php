@@ -29,10 +29,10 @@ if(isset($_GET['checkout'])){
             $product = mysqli_query($conn,$product_query);
             
             if ($product && $product_row = mysqli_fetch_assoc($product)) {
-                $price = $product_row['Price'];
+                $price = $product_row['Price'] * $quan;
 
                 // Insert into orderitems
-                $orderitem_query = "INSERT INTO orderitems(OrderID, ProductID, Price, Quantity, TotalPrice) VALUES('$orderID', '$productid', '$price', '$quan', '$total')";
+                $orderitem_query = "INSERT INTO orderitems(OrderID, ProductID, Quantity, TotalPrice) VALUES('$orderID', '$productid', '$quan', '$price')";
                 $order = mysqli_query($conn, $orderitem_query);
 
                 if ($order) {
