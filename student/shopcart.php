@@ -12,7 +12,7 @@ if(isset($_GET['checkout'])){
     $status = "For approval";
     $date = date('Y-m-d H:i:s');
     $srcode = $_SESSION['SR_Code'];
-    $order_query= "INSERT INTO orderdb(SR_Code, Orderdate, Status) VALUES('{$srcode}','{$date}','{$status}')";
+    $order_query= "INSERT INTO orderdb(SR_Code, Orderdate, Status, OrderCost) VALUES('{$srcode}','{$date}','{$status}','{$total}')";
     if(mysqli_query($conn,$order_query)){
         $orderID = mysqli_insert_id($conn);
 
@@ -25,20 +25,29 @@ if(isset($_GET['checkout'])){
             $quan = $row['Quantity'];
 
             // select for db productdb
-            $product_query = "SELECT Price FROM productdb WHERE ProductID = $productid";
+            $product_query = "SELECT Price, AvailStocks FROM productdb WHERE ProductID = $productid";
             $product = mysqli_query($conn,$product_query);
             
             if ($product && $product_row = mysqli_fetch_assoc($product)) {
                 $price = $product_row['Price'] * $quan;
+                $stocks = $product_row['AvailStocks'];
 
                 // Insert into orderitems
                 $orderitem_query = "INSERT INTO orderitems(OrderID, ProductID, Quantity, TotalPrice) VALUES('$orderID', '$productid', '$quan', '$price')";
-                $order = mysqli_query($conn, $orderitem_query);
+                $order = mysqli_query($conn, $orderitem_query); 
 
                 if ($order) {
                     header("Location: ../student/home.php?message=Thankyou for Reserving, Your Order is now For Approval");
+                    $newstocks = $stocks - $quan;  
                     $delete_query = "DELETE FROM shopcart WHERE SR_Code = '$srcode'";
                     $delete = mysqli_query($conn,$delete_query);
+                    $update_query = "UPDATE productdb SET AvailStocks = '{$newstocks}' WHERE ProductID = '$productid'";
+                    $update_stocks = mysqli_query($conn,$update_query);
+
+                    if (!$update_stocks) {
+                        // Handle the update error if needed
+                        echo "Error updating stocks: " . mysqli_error($conn);
+                    }
                 }
         }
     }
@@ -53,6 +62,17 @@ if(isset($_POST['update_product'])){
     $update_quan = mysqli_query($conn,$query);
 
     if($update_quan){
+        header("Location:../student/shopcart.php");
+    }
+}
+
+if(isset($_GET['cartid'])){
+    $cartid = $_GET['cartid'];
+
+    $query = "DELETE FROM shopcart WHERE cartid = '$cartid'";
+    $delete = mysqli_query($conn,$query);
+
+    if($delete){
         header("Location:../student/shopcart.php");
     }
 }
@@ -139,7 +159,7 @@ if(isset($_POST['update_product'])){
                         <!--For the pricing of product-->
                         <td>&#8369;<?php echo $subtotal =  $row['Price'] * $quan?>.00</td>
                         <td class="text-center">
-                            <a href="" class='btn btn-success'>Delete</a>
+                            <a href="../student/shopcart.php?cartid=<?php echo $cartid;?>" class='btn btn-success'>Delete</a>
                         </td>
                     </tr>
             <?php

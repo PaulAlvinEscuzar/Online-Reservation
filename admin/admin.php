@@ -1,16 +1,3 @@
-<head>
-    <style>
-    .card-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .card {
-        margin: 1rem;
-    }
-    </style>
-</head>
 <?php include('../includes/db.php');
 include('../includes/header.php');
 ?>
@@ -41,6 +28,7 @@ include('../includes/header.php');
                         <a class="nav-link me-3" href="../admin/orders.php">
                             <h4> Orders</h4>
                         </a>
+                        <a href="loginadmin.php" class="btn btn-danger fs-5 fw-bold">Logout</a>
                     </div>
                 </div>
             </div>
@@ -58,11 +46,25 @@ include('../includes/header.php');
                     </div>
                 </div>
                 <div class="container d-grid">
-                    <input type="submit" class="btn btn-success mb-3" name="show_reports">
+                    <input type="submit" id="btn-submit" class="btn btn-success mb-3" onclick="showbutton()" name="show_reports">
                 </div>
-
+                
             </form>
         </div>
+        <button class="btn btn-success " id="btn-print" onclick="printTable()">Print Table</button>
+        <table class="table table-striped table-bordered table-hover mt-5">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Cost</th>
+                    <th scope="col">Order Date</th>
+
+                </tr>
+            </thead>
+            <tbody>
         <?php
         if (isset($_POST['show_reports'])) {
             $begindate = $_POST['begindate'];
@@ -74,7 +76,7 @@ include('../includes/header.php');
                 exit();
             } else {
         ?>
-        <h1 class="text-center"> Reports From <?php echo "$begindate" ?> to <?php echo "$enddate" ?></h1>
+        <h1 class="text-center" id="report-name"> Reports From <?php echo "$begindate" ?> to <?php echo "$enddate" ?></h1>
         <?php
 
                 $query = "SELECT * FROM orderdb WHERE Orderdate BETWEEN '$begindate' AND '$enddate';";
@@ -82,29 +84,19 @@ include('../includes/header.php');
 
                 if (mysqli_num_rows($select_date) > 0) {
                     while ($row = mysqli_fetch_assoc($select_date)) {
+                        $orderdate = $row['Orderdate'];
                         $orderid = $row['OrderID'];
                         $srcode = $row['SR_Code'];
                         $total = $row['OrderCost'];
 
-                        $customer_query = "SELECT firstname, lastname, dept, prog_sec, cnum FROM student_record WHERE SR_Code = '$srcode'";
+                        $customer_query = "SELECT firstname, lastname, dept FROM student_record WHERE SR_Code = '$srcode'";
                         $view_customer = mysqli_query($conn, $customer_query);
 
                         if (mysqli_num_rows($view_customer) > 0) {
                             while ($customer_row = mysqli_fetch_assoc($view_customer)) {
                                 $firstname = $customer_row['firstname'];
                                 $lastname = $customer_row['lastname'];
-                                $progsec = $customer_row['prog_sec'];
-                                $cnum = $customer_row['cnum'];
-
-                                echo '<div class="container">
-                                <div class="row">
-                                    <h3 class="font-monospace text-center mt-5">
-                                        Customer: ' . $firstname . ' ' . $lastname . '
-                                    </h3>';
-                                echo '<h3 class = "text-center">SR-Code: ' . $srcode . '</h3>';
-                                echo '<h3 class = "text-center">Program and Section: ' . $progsec . '</h3>';
-                                echo '<h3 class = "text-center"> Order Cost: &#8369; ' . $total . '.00</h3>';
-
+                                $department = $customer_row['dept'];
 
                                 // Code for displaying the products
                                 $query2 = "SELECT * FROM orderitems WHERE OrderID = '$orderid';";
@@ -124,26 +116,20 @@ include('../includes/header.php');
                                             $productname = $product_data['ProductName'];
                                             $image = $product_data['image'];
 
-
-
-                                            echo '
-                                        <div class ="card-container">
-                                            <div class="card my-3 col-4 border border-dark p-3" style="width: 18rem;">
-                                                <img src="../uploadedimg/' . $image . '" class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                <h5 class="card-title">' . $productname . '</h5>
-                                                <p class="card-text">Quantity: ' . $quantity . '</p>
-                                            </div>
-                                        </div>
-                                        ';
+                                            ?>
+                                            <tr>
+                        <td><?php echo "$firstname"?> <?php echo "$lastname"?></td>
+                        <td><?php echo "$department"?></td>
+                        <td><?php echo "$productname"?></td>
+                        <td><?php echo " $quantity"?></td>
+                        <td class="bg-info-subtle">&#8369;<?php echo " $totalprice"?>.00</td>
+                        <td><?php echo " $orderdate"?></td>
+                    </tr>
+                                        <?php
                                         }
                                     }
                                 }
 
-                                echo '
-                        </div>
-                        </div>
-                        ';
                             }
                         }
                     }
@@ -153,5 +139,22 @@ include('../includes/header.php');
             }
         }
         ?>
+            </tbody>
+        </table>
     </div>
 </div>
+<script>
+    var reportNameElement = document.getElementById('report-name');
+    function printTable() {
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<link rel="stylesheet" href="../includes/bootstrap.css">');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<style>body {margin: 20px;} .table tr th{color: black;} </style>');
+        printWindow.document.write(reportNameElement.innerHTML);
+        printWindow.document.write(document.querySelector('.table').outerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>

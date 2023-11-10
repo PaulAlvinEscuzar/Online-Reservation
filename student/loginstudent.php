@@ -2,7 +2,8 @@
 
 <div class="container">
     <div class="row-mt-5">
-    <h1 class="text-center mt-5">Online Reservation</h1>
+    <h1 class="text-center mt-5 mb-5">
+Merchandise Reservation System for the Department of CICS</h1>
         <div class="d-flex justify-content-between align-items-center">
             <div class="container">
             <img src="../img/bsu_logo.png" width="400px" class="me-auto" alt="">
@@ -24,8 +25,6 @@
         <div class="container d-flex">
             <div class="container text-center mt-3 mb-3">
                 <input type="submit" class="btn btn-primary me-3" value="Login">
-                <a href="../selection/selection.php"class="btn btn-warning">Back</a>
-                <p class="mt-3"><a class="link-opacity-100" href="../student/register.php">Register</a></p>
             </div>
         </div>
         </form>

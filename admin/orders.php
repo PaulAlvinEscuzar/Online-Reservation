@@ -59,7 +59,7 @@ if(isset($_GET['delete'])){
     <div class="row-mt-5">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand ms-3" href="#">Navbar</a>
+            <a class="navbar-brand ms-3" href="#">Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -124,7 +124,7 @@ if(isset($_GET['delete'])){
                             </form>
                         </td>
                         <td class="text-center">
-                            <a href = "../admin/customerDetails.php?delete=<?php echo $orderid?>" class="btn btn-danger">Delete</a>
+                            <a href = "../admin/orders.php?delete=<?php echo $orderid?>" class="btn btn-danger">Delete</a>
                         </td>
                         <td class="text-center">
                             <a href = "../admin/orders.php?view=<?php echo $orderid?>" class="btn btn-success">View Order</a>

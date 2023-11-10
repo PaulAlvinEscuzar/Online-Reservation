@@ -60,7 +60,7 @@ if(isset($_POST['add_cart'])){
     <div class="row-mt-5">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand ms-3" href="#">Navbar</a>
+            <a class="navbar-brand ms-3" href="#">Student Portal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -68,12 +68,13 @@ if(isset($_POST['add_cart'])){
                 <div class="mx-auto"></div>
                 <div class="navbar-nav">
                     <a class="nav-link active me-3" aria-current="page" href="#"><h4><i class="bi bi-house-door-fill"></i></h4></a>
-                    <a class="nav-link me-3" href="#"><h4><i class="bi bi-geo-alt-fill"></i></h4></a>
+                    <a class="nav-link me-3" href="../student/trackorder.php"><h4><i class="bi bi-geo-alt-fill"></i></h4></a>
                     <a class="nav-link me-3" href="#"><h4><i class="bi bi-envelope-fill"></i></h4></a>
                     <a class="nav-link me-3" href="#"><h4><i class="bi bi-people-fill"></i></h4></a>
                     <div class="container">
                     <a type="button" class="me-3 btn btn-outline-success btn-rounded w-100" href="../student/shopcart.php"><h4><i class="bi bi-cart-fill"></i></h4></a>
                     </div>
+                    <a href="logout.php" class="btn btn-danger mb-3 mt-2 fw-bold">Logout</a>
                 </div>
             </div>
         </div>
@@ -84,9 +85,7 @@ if(isset($_POST['add_cart'])){
         <h1 class="ps-5 pe-5">Welcome <?php echo $_SESSION['firstname'],' ', $_SESSION['lastname']; ?></h1>
         <h1 class="ps-5 pe-5">SR-Code: <?php echo $_SESSION['SR_Code']; ?></h1>
         <h1 class="ps-5 pe-5">Department: <?php echo $_SESSION['dept']; ?></h1>
-        <h1 class="ps-5 pe-5">Program and Section: <?php echo $_SESSION['prog_sec']; ?></h1>
         <div class="justify-content-center text-center">
-        <a href="logout.php" class="btn btn-danger mb-3 mt-2">Logout</a>
         </div>
         </div>
     </div>

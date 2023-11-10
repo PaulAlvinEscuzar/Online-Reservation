@@ -71,7 +71,7 @@ if(isset($_POST['update_product'])){
     <div class = "row-mt-5">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand ms-3" href="#">Navbar</a>
+            <a class="navbar-brand ms-3" href="#">Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -116,6 +116,7 @@ if(isset($_POST['update_product'])){
                     <th scope="col">Product Image</th>
                     <th scope="col">Product Name</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Available Stocks</th>
                     <th scope="col" colspan="2">Action</th>
                 </tr>
             </thead>
@@ -129,12 +130,14 @@ if(isset($_POST['update_product'])){
                         $pname = $row['ProductName'];
                         $price = $row['Price'];
                         $pimage = $row['image'];
+                        $stocks = $row['AvailStocks'];
                     ?>
                     <tr>
-                        <td><img src="../uploadedimg/<?php echo "$pimage"?>" height="108px"></td>
-                        <td><?php echo "$pname"?></td>
-                        <td>&#8369;<?php echo " $price"?>.00</td>
-                        <td class="text-center">
+                        <td class="text-center"><img src="../uploadedimg/<?php echo "$pimage"?>" width="120" height="150px"></td>
+                        <td class="text-center"><?php echo "$pname"?></td>
+                        <td class="text-center">&#8369;<?php echo " $price"?>.00</td>
+                        <td class="text-center">&#8369;<?php echo " $stocks"?>.00</td>
+                        <td  class="text-center">
                             <a href="../admin/addproduct.php?delete=<?php echo $row['ProductID'];?>" class='btn btn-primary
                             ' onclick="return confirm('Are you sure to delete this?')">Delete</a>
                         </td>

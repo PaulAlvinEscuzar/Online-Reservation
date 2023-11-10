@@ -23,7 +23,7 @@ if (isset($_SESSION['prog_sec'])) {
         <div class="row-mt-5">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                    <a class="navbar-brand ms-3" href="#">Student</a>
+                    <a class="navbar-brand ms-3" href="#">Track my Order</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -51,8 +51,9 @@ if (isset($_SESSION['prog_sec'])) {
                     </div>
                 </div>
             </nav>
-            <h1 class="text-center mt-3">My Order</h1>
+            <h1 class="text-center mt-3">My Orders</h1>
             <?php
+            $ordercost = 0;
             $srcode = $_SESSION['SR_Code'];
 
             $query1 = "SELECT OrderID, Status, OrderCost FROM orderdb WHERE SR_Code = '$srcode' ";
@@ -64,7 +65,10 @@ if (isset($_SESSION['prog_sec'])) {
                 while ($order_row = mysqli_fetch_assoc($select_order)) {
                     $orderid = $order_row['OrderID'];
                     $status = $order_row['Status'];
-                    $ordercost = $order_row['OrderCost'];
+
+                    if($status == "Approved"){
+                        $status = "Your order is approved you can get it now in 5th floor of CICS Building";
+                    }
 
 
                     $query2 = "SELECT ProductID, Quantity, TotalPrice FROM orderitems WHERE OrderID = '$orderid'";
@@ -94,17 +98,22 @@ if (isset($_SESSION['prog_sec'])) {
                                             <p class="card-text">Price: &#8369; <?php echo "$price" ?>.00</p>
                                             <p class="card-text">Quantity: <?php echo "$quan" ?></p>
                                             <p class="card-text">Total Price: &#8369; <?php echo "$totalprice" ?>.00</p>
+                                            <p class="card-text">Status: <?php echo "$status" ?></p>
+
                                         </div>
                                     </div>
             <?php }
                             }
                         }
-                    }
+                    }$ordercost+=  $totalprice;
                 }
                 echo '</div>
                 </div>';
-            } ?>
-            <h3 class="text-center p-5 bg-primary-subtle"> Order Cost: &#8369;<?php echo "$ordercost" ?>.00 </h3>
+            }?> 
+            <div class="d-grid bg-primary-subtle p-5 gap-3">
+            <h3 class="text-center"> Order Cost: &#8369;<?php echo "$ordercost" ?>.00 </h3>
+            </div>
+            
         </div>
     </div>
 <?php
