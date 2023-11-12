@@ -12,10 +12,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
 </head>
-<div class="container-lg bg-danger-subtle p-3 d-flex justify-content-between"> 
+<div class="bg-danger-subtle p-3 d-flex justify-content-between"> 
     <img src="../img/bsu_logo.png" style="width: auto ; height: 15vh ;" alt="...">
     <h1 class="text-center mt-4">Batangas State University</h1>
     <div class="logo-header">
-            <img src="../img/cics_logo.jpg" alt="" style="width:auto; height: 15vh;">
+    <img src="../img/cics_logo.jpg" alt="cics-logo" style="width:auto; height: 15vh;">
         </div>
 </div>

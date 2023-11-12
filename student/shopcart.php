@@ -78,7 +78,7 @@ if(isset($_GET['cartid'])){
 }
 ?>
 
-<div class="container">
+<div class="container-xxl">
 <!--Displaying message to user-->
 <?php if (isset($_GET['message'])) { ?>
             <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
@@ -95,9 +95,8 @@ if(isset($_GET['cartid'])){
                 <div class="mx-auto"></div>
                 <div class="navbar-nav">
                     <a class="nav-link me-3" href="../student/home.php"><h4><i class="bi bi-house-door-fill"></i></h4></a>
-                    <a class="nav-link me-3" href="#"><h4><i class="bi bi-geo-alt-fill"></i></h4></a>
-                    <a class="nav-link me-3" href="#"><h4><i class="bi bi-envelope-fill"></i></h4></a>
-                    <a class="nav-link me-3" href="#"><h4><i class="bi bi-people-fill"></i></h4></a>
+                    <a class="nav-link me-3" href="../student/trackorder.php"><h4><i class="bi bi-geo-alt-fill"></i></h4></a>
+                    <a class="nav-link me-3" href="../student/contactus.php"><h4><i class="bi bi-envelope-fill"></i></h4></a>
                     <div class="container">
                     <a type="button" aria-current="page" class="me-3 btn btn-outline-success btn-rounded w-100 active"  href="../student/cart.php"><h4><i class="bi bi-cart-fill"></i></h4></a>
                     </div>

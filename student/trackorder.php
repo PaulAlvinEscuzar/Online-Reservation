@@ -19,7 +19,7 @@ session_start();
 if (isset($_SESSION['prog_sec'])) {
 
 ?>
-    <div class="container">
+    <div class="container-xxl">
         <div class="row-mt-5">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
@@ -36,11 +36,8 @@ if (isset($_SESSION['prog_sec'])) {
                             <a class="nav-link me-3 active" aria-current="page" href="../student/trackorder.php">
                                 <h4><i class="bi bi-geo-alt-fill"></i></h4>
                             </a>
-                            <a class="nav-link me-3" href="#">
+                            <a class="nav-link me-3" href="../student/contactus.php">
                                 <h4><i class="bi bi-envelope-fill"></i></h4>
-                            </a>
-                            <a class="nav-link me-3" href="#">
-                                <h4><i class="bi bi-people-fill"></i></h4>
                             </a>
                             <div class="container">
                                 <a type="button" class="me-3 btn btn-outline-success btn-rounded w-100" href="../student/shopcart.php">

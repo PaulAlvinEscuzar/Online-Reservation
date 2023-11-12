@@ -50,7 +50,7 @@ if(isset($_POST['add_cart'])){
     }
 }
 ?>
-<div class="container">
+<div class="container-xxl">
 <?php if (isset($_GET['message'])) { ?>
             <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
         <?php } ?>
@@ -69,8 +69,7 @@ if(isset($_POST['add_cart'])){
                 <div class="navbar-nav">
                     <a class="nav-link active me-3" aria-current="page" href="#"><h4><i class="bi bi-house-door-fill"></i></h4></a>
                     <a class="nav-link me-3" href="../student/trackorder.php"><h4><i class="bi bi-geo-alt-fill"></i></h4></a>
-                    <a class="nav-link me-3" href="#"><h4><i class="bi bi-envelope-fill"></i></h4></a>
-                    <a class="nav-link me-3" href="#"><h4><i class="bi bi-people-fill"></i></h4></a>
+                    <a class="nav-link me-3" href="../student/contactus.php"><h4><i class="bi bi-envelope-fill"></i></h4></a>
                     <div class="container">
                     <a type="button" class="me-3 btn btn-outline-success btn-rounded w-100" href="../student/shopcart.php"><h4><i class="bi bi-cart-fill"></i></h4></a>
                     </div>

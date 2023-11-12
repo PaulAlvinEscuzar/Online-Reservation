@@ -66,6 +66,8 @@ if(isset($_POST['update_customer'])){
                     <a class="nav-link me-3" href="../admin/addproduct.php"><h4> Add Product</h4></a>
                     <a class="nav-link active me-3 btn btn-outline-primary btn-rounded text-wrap" style="color:white ;" aria-current="page"  href="../admin/customerDetails.php"><h4> Customer Details</h4></a>
                     <a class="nav-link me-3" href="../admin/orders.php"><h4> Orders</h4></a>
+                    <a class="nav-link me-3" href="../admin/contactus.php"><h4> Messages</h4></a>
+                    <a href="loginadmin.php" class="btn btn-danger fs-5 fw-bold">Logout</a>
                 </div>
             </div>
         </div>

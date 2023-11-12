@@ -28,6 +28,7 @@ include('../includes/header.php');
                         <a class="nav-link me-3" href="../admin/orders.php">
                             <h4> Orders</h4>
                         </a>
+                        <a class="nav-link me-3" href="../admin/contactus.php"><h4> Messages</h4></a>
                         <a href="loginadmin.php" class="btn btn-danger fs-5 fw-bold">Logout</a>
                     </div>
                 </div>
