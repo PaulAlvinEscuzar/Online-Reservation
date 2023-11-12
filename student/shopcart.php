@@ -77,17 +77,10 @@ if(isset($_GET['cartid'])){
     }
 }
 ?>
-
-<div class="container-xxl">
-<!--Displaying message to user-->
-<?php if (isset($_GET['message'])) { ?>
-            <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
-        <?php } ?>
-    <div class="row-mt-5">
-    <!--nav bar-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+ <!--nav bar-->
+ <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand ms-3" href="#">Navbar</a>
+            <a class="navbar-brand ms-3" href="#">Add to Cart</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -100,11 +93,18 @@ if(isset($_GET['cartid'])){
                     <div class="container">
                     <a type="button" aria-current="page" class="me-3 btn btn-outline-success btn-rounded w-100 active"  href="../student/cart.php"><h4><i class="bi bi-cart-fill"></i></h4></a>
                     </div>
+                    <a href="logout.php" class="btn btn-danger mb-3 mt-2 fw-bold">Logout</a>
                 </div>
             </div>
         </div>
     </nav>
     <!--end of nav bar-->
+<div class="container-xxl">
+<!--Displaying message to user-->
+<?php if (isset($_GET['message'])) { ?>
+            <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
+        <?php } ?>
+    <div class="row-mt-5">
     <h3 class="text-center p-3"> Shopping Cart</h3>
     <!--Table Start-->
 

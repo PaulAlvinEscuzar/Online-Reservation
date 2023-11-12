@@ -19,9 +19,7 @@ session_start();
 if (isset($_SESSION['prog_sec'])) {
 
 ?>
-    <div class="container-xxl">
-        <div class="row-mt-5">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand ms-3" href="#">Track my Order</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,15 +37,19 @@ if (isset($_SESSION['prog_sec'])) {
                             <a class="nav-link me-3" href="../student/contactus.php">
                                 <h4><i class="bi bi-envelope-fill"></i></h4>
                             </a>
+
                             <div class="container">
                                 <a type="button" class="me-3 btn btn-outline-success btn-rounded w-100" href="../student/shopcart.php">
                                     <h4><i class="bi bi-cart-fill"></i></h4>
                                 </a>
                             </div>
+                            <a href="logout.php" class="btn btn-danger mb-3 mt-2 fw-bold">Logout</a>
                         </div>
                     </div>
                 </div>
             </nav>
+    <div class="container-xxl">
+        <div class="row-mt-5">
             <h1 class="text-center mt-3">My Orders</h1>
             <?php
             $ordercost = 0;

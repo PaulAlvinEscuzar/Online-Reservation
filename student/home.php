@@ -50,14 +50,6 @@ if(isset($_POST['add_cart'])){
     }
 }
 ?>
-<div class="container-xxl">
-<?php if (isset($_GET['message'])) { ?>
-            <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
-        <?php } ?>
-        <?php if (isset($_GET['errormessage'])) { ?>
-            <p class="text-center bg-danger-subtle p-4 mt-3 error"><?php echo $_GET['errormessage']; ?></p>
-        <?php } ?>
-    <div class="row-mt-5">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand ms-3" href="#">Student Portal</a>
@@ -78,6 +70,14 @@ if(isset($_POST['add_cart'])){
             </div>
         </div>
     </nav>
+<div class="container-xxl">
+<?php if (isset($_GET['message'])) { ?>
+            <p class="text-center bg-primary-subtle p-4 mt-3 error"><?php echo $_GET['message']; ?></p>
+        <?php } ?>
+        <?php if (isset($_GET['errormessage'])) { ?>
+            <p class="text-center bg-danger-subtle p-4 mt-3 error"><?php echo $_GET['errormessage']; ?></p>
+        <?php } ?>
+    <div class="row-mt-5">
 
     <div class="h-100 d-inline-flex flex-column justify-content-center align-items-center mt-5">
         <div class="border-top border-5 border-danger p-5">
