@@ -13,13 +13,15 @@ if(isset($_GET['checkout'])){
     $date = date('Y-m-d H:i:s');
     $srcode = $_SESSION['SR_Code'];
     $order_query= "INSERT INTO orderdb(SR_Code, Orderdate, Status, OrderCost) VALUES('{$srcode}','{$date}','{$status}','{$total}')";
+    
     if(mysqli_query($conn,$order_query)){
         $orderID = mysqli_insert_id($conn);
 
         // select for db shopcart
-        $query = "SELECT * FROM shopcart";
+        $query = "SELECT * FROM shopcart WHERE SR_CODE = '$srcode'";
         $select = mysqli_query($conn,$query);
-
+        
+        if(mysqli_num_rows($select) > 0){
         while($row = mysqli_fetch_assoc($select)){
             $productid = $row['ProductID'];
             $quan = $row['Quantity'];
@@ -49,9 +51,13 @@ if(isset($_GET['checkout'])){
                         echo "Error updating stocks: " . mysqli_error($conn);
                     }
                 }
+
+                }
+            }
+        } else {
+            header("Location: ../student/home.php?message=Your cart is empty.");
         }
     }
-}
 }
 // For updating the quantity of Product
 if(isset($_POST['update_product'])){
@@ -121,7 +127,8 @@ if(isset($_GET['cartid'])){
         </thead>
         <tbody>
             <?php
-            $query = "SELECT * FROM shopcart";
+            $srcode = $_SESSION['SR_Code'];
+            $query = "SELECT * FROM shopcart WHERE SR_Code = '$srcode'";
             $display = mysqli_query($conn,$query);
             $total = 0;
 
@@ -146,7 +153,7 @@ if(isset($_GET['cartid'])){
                             <form action="" method="POST">
                                     <input type="hidden" value="<?php echo $cartid?>" name="up_quan_id">
                                 <div class="input-group mb-3">
-                                    <input type="number" min="1" value="<?php echo $quan?>" name="up_quan" class="text-center p-1">
+                                    <input type="number" min="1" value="<?php echo $quan?>" name="up_quan" class="form-control text-center p-1">
                                 </div>
                                 <td>
                                 <div class="container d-grid">

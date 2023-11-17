@@ -10,6 +10,7 @@
             /* Add some padding or styling for better visibility */
             background-color: rgba(255, 255, 255, 0.8);
             width: 100%;
+            height: 100%;
         }
 
     </style>
@@ -76,7 +77,7 @@ if(isset($_POST['submit'])){
                 <a  class="text-decoration-none" href="https://www.facebook.com/JPCSBatStateULipa"><i class="bi bi-facebook"> You can contact us in our Facebook page</i></a>
             </div>                    
         </div>
-        </body>
+</body>
 </div>
 </div>
 <?php

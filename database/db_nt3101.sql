@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2023 at 02:25 PM
+-- Generation Time: Nov 17, 2023 at 06:39 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -28,9 +28,37 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admindb` (
-  `adminID` int(11) NOT NULL,
-  `password` int(11) NOT NULL
+  `adminID` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admindb`
+--
+
+INSERT INTO `admindb` (`adminID`, `password`) VALUES
+('admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contactus`
+--
+
+CREATE TABLE `contactus` (
+  `ID` int(11) NOT NULL,
+  `SR_Code` varchar(100) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `contactus`
+--
+
+INSERT INTO `contactus` (`ID`, `SR_Code`, `subject`, `message`) VALUES
+(1, '21-30169', 'About Pin', 'Hi, Im paul and ang masasabi ko lang sa product niyo ay napakaganda at hindi maikukumpara sa iba pang product. Sana ituloy niyo lang ang magandang serbisyon niyo'),
+(2, '21-30169', 'About Pin', 'sjahkjhkjsahkjhsdfkjhasdkfjhasdkjfhaksjdhfaksjdhfakjsdhfakjsdhfaskdjhfaskjdhfaksdjfhaskdjfhaskdjfhasdkjfhasdkjfhasdkjfhasdkjfhasdkfjhaskdfjhaskdjfhaskdfjhaskdjfhaskjdfhaksjdhfaksjdhfkasjdfhaksdjfhaksdjhfaksjdhfaksjdhfaksjhfaskjdhfaksjdhfaskjdhfaskjdfhaskjdfhaskjdhfaskjdfhaskdjfhaskjfhasdkfjhaskdjfhasdkjfhaskdjfhasdkjfhasdkjfhaskjdhfaskjdhfaskjdhfaksjdhfkjashdfkjasdhfakjsdhfaskdjhfaksjdhfasdfasdfasdfasdfasdfasdfasdfasdfasdf');
 
 -- --------------------------------------------------------
 
@@ -42,8 +70,22 @@ CREATE TABLE `orderdb` (
   `OrderID` int(100) NOT NULL,
   `SR_Code` varchar(100) NOT NULL,
   `Orderdate` date NOT NULL,
-  `Status` varchar(255) NOT NULL
+  `Status` varchar(255) NOT NULL,
+  `OrderCost` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orderdb`
+--
+
+INSERT INTO `orderdb` (`OrderID`, `SR_Code`, `Orderdate`, `Status`, `OrderCost`) VALUES
+(97, '21-30169', '2023-11-07', 'Approved', 27),
+(114, '21-30169', '2023-11-10', 'Approved', 9),
+(120, '21-33112', '2023-11-17', 'For approval', 0),
+(121, '21-33112', '2023-11-17', 'For approval', 0),
+(122, '21-33112', '2023-11-17', 'For approval', 0),
+(123, '21-33112', '2023-11-17', 'For approval', 9),
+(124, '21-33112', '2023-11-17', 'For approval', 9);
 
 -- --------------------------------------------------------
 
@@ -55,10 +97,22 @@ CREATE TABLE `orderitems` (
   `OrderItemID` int(11) NOT NULL,
   `OrderID` int(100) NOT NULL,
   `ProductID` int(100) NOT NULL,
-  `Price` int(100) NOT NULL,
   `Quantity` int(100) NOT NULL,
   `TotalPrice` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orderitems`
+--
+
+INSERT INTO `orderitems` (`OrderItemID`, `OrderID`, `ProductID`, `Quantity`, `TotalPrice`) VALUES
+(117, 97, 1, 3, 27),
+(142, 114, 1, 1, 9),
+(148, 120, 1, 1, 9),
+(149, 120, 3, 1, 4),
+(150, 121, 1, 1, 9),
+(151, 121, 3, 1, 4),
+(152, 124, 1, 1, 9);
 
 -- --------------------------------------------------------
 
@@ -70,17 +124,19 @@ CREATE TABLE `productdb` (
   `ProductID` int(100) NOT NULL,
   `ProductName` varchar(255) NOT NULL,
   `Price` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL
+  `image` varchar(255) NOT NULL,
+  `AvailStocks` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `productdb`
 --
 
-INSERT INTO `productdb` (`ProductID`, `ProductName`, `Price`, `image`) VALUES
-(1, 'Shot Glass', '9', '320140-removebg-preview.png'),
-(3, 'Pin', '4', 'IMS.png'),
-(4, 'Shirt', '200', 'EscuzarPaulAlvin_BSIT2203.png');
+INSERT INTO `productdb` (`ProductID`, `ProductName`, `Price`, `image`, `AvailStocks`) VALUES
+(1, 'Shot Glass', '9', '320140-removebg-preview.png', 7),
+(3, 'Pin', '4', 'IMS.png', 7),
+(4, 'Shirt', '200', 'EscuzarPaulAlvin_BSIT2203.png', 9),
+(5, 'Id Lace', '50', 'andre-benz-cXU6tNxhub0-unsplash.jpg', 8);
 
 -- --------------------------------------------------------
 
@@ -94,6 +150,14 @@ CREATE TABLE `shopcart` (
   `ProductID` int(100) NOT NULL,
   `Quantity` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shopcart`
+--
+
+INSERT INTO `shopcart` (`CartID`, `SR_Code`, `ProductID`, `Quantity`) VALUES
+(57, '21-30169', 1, 4),
+(58, '21-30169', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -117,23 +181,8 @@ CREATE TABLE `student_record` (
 --
 
 INSERT INTO `student_record` (`SR_Code`, `pass`, `firstname`, `lastname`, `email`, `dept`, `prog_sec`, `cnum`) VALUES
-('21-30169', 'Pol', 'Paul Alvin ', 'Escuzar', '21-30169@g.batstate-u.edu.ph', 'CICS', 'BSIT-NT-3101', '09090774577'),
-('21-34945', 'winforyou', 'Wingell Lord', 'Vinas', '21-34945@g.batstate-u.edu.ph', 'CICS', 'BSIT-NT-3101', '09445278541'),
-('21-55575', 'Marie', 'Marie Glen', 'Cuenca', '21-55575@g.batstate-u.ph', 'CCS', 'BCSC-3e', '0977123456');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `trackorder`
---
-
-CREATE TABLE `trackorder` (
-  `TrackID` int(100) NOT NULL,
-  `OrderID` int(100) NOT NULL,
-  `SR-Code` varchar(100) NOT NULL,
-  `Status` varchar(255) NOT NULL,
-  `Fee` int(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+('21-30169', 'Pol', 'Paul Alvin', 'Tolentino', '21-30169@g.batstate-u.edu.ph', 'CICS', 'BSIT-NT-3101', '09090774577'),
+('21-33112', 'Lord', 'Wingell Lord', 'Vinas', 'ichigokurosaki@gmail.com', 'CICS', 'BSIT-NT-3101', '09445278541');
 
 --
 -- Indexes for dumped tables
@@ -144,6 +193,12 @@ CREATE TABLE `trackorder` (
 --
 ALTER TABLE `admindb`
   ADD PRIMARY KEY (`adminID`);
+
+--
+-- Indexes for table `contactus`
+--
+ALTER TABLE `contactus`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `orderdb`
@@ -179,44 +234,38 @@ ALTER TABLE `student_record`
   ADD PRIMARY KEY (`SR_Code`);
 
 --
--- Indexes for table `trackorder`
---
-ALTER TABLE `trackorder`
-  ADD PRIMARY KEY (`TrackID`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `contactus`
+--
+ALTER TABLE `contactus`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orderdb`
 --
 ALTER TABLE `orderdb`
-  MODIFY `OrderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `OrderID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `orderitems`
 --
 ALTER TABLE `orderitems`
-  MODIFY `OrderItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `OrderItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT for table `productdb`
 --
 ALTER TABLE `productdb`
-  MODIFY `ProductID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ProductID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `shopcart`
 --
 ALTER TABLE `shopcart`
-  MODIFY `CartID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `trackorder`
---
-ALTER TABLE `trackorder`
-  MODIFY `TrackID` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `CartID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- Constraints for dumped tables

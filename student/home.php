@@ -40,18 +40,18 @@ if(isset($_POST['add_cart'])){
     $quan = $_POST['quan'];
 
     
-    $query = "SELECT * FROM shopcart WHERE ProductID = '$productID'";
+    $query = "SELECT * FROM shopcart WHERE ProductID = '$productID' AND SR_Code = '$srcode'";
     $select = mysqli_query($conn, $query);
     if(mysqli_num_rows($select)>0){
-        header("Location: ../student/home.php?errormessage=The Product Added to Cart Successfully");
+        header("Location: ../student/home.php?errormessage=You already add that Product");
     }else{
         $checkavail = "SELECT AvailStocks FROM productdb WHERE ProductID = '$productID'";
         $check = mysqli_query($conn,$checkavail);
         while($checkrow = mysqli_fetch_assoc($check)){
             $available = $checkrow['AvailStocks'];
         }
-        if($available == 0 || $available < $quantity){
-            header("Location: ../student/home.php?errormessage=Out of Stock");
+        if($available === 0 || $available < $quan){
+            header("Location:../student/home.php?errormessage=Out of Stock");
         }
         else{
             $query = "INSERT INTO shopcart(SR_Code,ProductID,Quantity) VALUES ('{$srcode}','{$productID}','{$quan}')";

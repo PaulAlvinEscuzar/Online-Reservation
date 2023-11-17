@@ -49,6 +49,16 @@ if(isset($_GET['delete'])){
         header("Location:../admin/addproduct.php?message=Product Delete Successfully");
     }
 }
+if(isset($_POST['addStocks'])){
+    $productid = $_POST['productid'];
+    $addstocks = $_POST['add_stocks'];
+    
+    $sql = "UPDATE productdb SET AvailStocks = '$addstocks' WHERE ProductID ='$productid'";
+    $add_stocks = mysqli_query($conn,$sql);
+     if($add_stocks){
+        header("Location:../admin/addproduct.php?message=Successfully Add Stocks");
+     }
+}
 if(isset($_POST['update_product'])){
 
     $update_id = $_POST['update_id'];
@@ -130,6 +140,7 @@ if(isset($_POST['update_product'])){
 
                 if(mysqli_num_rows($select)>0){
                     while($row = mysqli_fetch_assoc($select)){
+                        $productid = $row['ProductID'];
                         $pname = $row['ProductName'];
                         $price = $row['Price'];
                         $pimage = $row['image'];
@@ -139,7 +150,17 @@ if(isset($_POST['update_product'])){
                         <td class="text-center"><img src="../uploadedimg/<?php echo "$pimage"?>" width="120" height="150px"></td>
                         <td class="text-center"><?php echo "$pname"?></td>
                         <td class="text-center">&#8369;<?php echo " $price"?>.00</td>
-                        <td class="text-center">&#8369;<?php echo " $stocks"?>.00</td>
+                        <td class="text-center align-middle">
+                            <form action="" method="POST">
+                                <input type="hidden" value="<?php echo $productid?>" name="productid">
+                                <div class="container d-grid mb-5">
+                                <div class="input-group my-3">
+                                    <input type="number" min="1" value="<?php echo $stocks?>" name="add_stocks" class="form-control text-center p-1">
+                                </div>
+                                    <input type="submit" value = "Add Stocks" class="btn btn-success mb-3" name="addStocks">
+                                </div>
+                            </form>
+                        </td>
                         <td  class="text-center">
                             <a href="../admin/addproduct.php?delete=<?php echo $row['ProductID'];?>" class='btn btn-primary
                             ' onclick="return confirm('Are you sure to delete this?')">Delete</a>
@@ -203,13 +224,5 @@ if(isset($_POST['update_product'])){
     document.querySelector('#close_edit').onclick = () =>{
         document.querySelector('.edit-form').style.display = 'none';
         window.location.href = 'addproduct.php'
-    }
-
-    function scrollToEditForm(){
-        var target = document.getElementById("edit-form");
-
-        if(target){
-            target.scrollIntoView({behavior:"smooth"});
-        }
     }
 </script>

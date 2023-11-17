@@ -1,3 +1,7 @@
+<?php
+include('../includes/db.php');
+include('../includes/header.php');
+?>
 <head>
     <style>
         .card-container {
@@ -12,8 +16,6 @@
     </style>
 </head>
 <?php
-include('../includes/db.php');
-include('../includes/header.php');
 session_start();
 
 if (isset($_SESSION['prog_sec'])) {
@@ -47,10 +49,10 @@ if (isset($_SESSION['prog_sec'])) {
                         </div>
                     </div>
                 </div>
-            </nav>
-    <div class="container-xxl">
-        <div class="row-mt-5">
-            <h1 class="text-center mt-3">My Orders</h1>
+</nav>
+<div class="bg-container">
+        <body>
+            <h1 class="text-center p-3">My Orders</h1>
             <?php
             $ordercost = 0;
             $srcode = $_SESSION['SR_Code'];
@@ -59,8 +61,7 @@ if (isset($_SESSION['prog_sec'])) {
             $select_order = mysqli_query($conn, $query1);
 
             if (mysqli_num_rows($select_order) > 0) {
-                echo '<div class="container">
-                        <div class="row card-container">';
+                echo '<div class="row card-container">';
                 while ($order_row = mysqli_fetch_assoc($select_order)) {
                     $orderid = $order_row['OrderID'];
                     $status = $order_row['Status'];
@@ -68,7 +69,6 @@ if (isset($_SESSION['prog_sec'])) {
                     if($status == "Approved"){
                         $status = "Your order is approved you can get it now in 5th floor of CICS Building";
                     }
-
 
                     $query2 = "SELECT ProductID, Quantity, TotalPrice FROM orderitems WHERE OrderID = '$orderid'";
                     $select_order_items = mysqli_query($conn, $query2);
@@ -90,7 +90,7 @@ if (isset($_SESSION['prog_sec'])) {
                                     $price = $product_row['Price'];
                                     $image = $product_row['image'];
                             ?>
-                                    <div class="card my-3 col-4 border border-dark p-3" style="width: 18rem;">
+                                    <div class="card my-3 col-4 border border-dark p-3" style="width: 17rem;">
                                         <img src="../uploadedimg/<?php echo "$image" ?>" class="card-img-top" alt="...">
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo "$product_name" ?></h5>
@@ -98,7 +98,6 @@ if (isset($_SESSION['prog_sec'])) {
                                             <p class="card-text">Quantity: <?php echo "$quan" ?></p>
                                             <p class="card-text">Total Price: &#8369; <?php echo "$totalprice" ?>.00</p>
                                             <p class="card-text">Status: <?php echo "$status" ?></p>
-
                                         </div>
                                     </div>
             <?php }
@@ -106,15 +105,13 @@ if (isset($_SESSION['prog_sec'])) {
                         }
                     }$ordercost+=  $totalprice;
                 }
-                echo '</div>
-                </div>';
+                echo '</div>';
             }?> 
-            <div class="d-grid bg-primary-subtle p-5 gap-3">
-            <h3 class="text-center"> Order Cost: &#8369;<?php echo "$ordercost" ?>.00 </h3>
+            <div class="d-grid bg-primary-subtle p-5 gap-3 w-100 container-xxl">
+                <h3 class="text-center"> Order Cost: &#8369;<?php echo "$ordercost" ?>.00 </h3>    
             </div>
-            
-        </div>
-    </div>
+        </body>
+</div>
 <?php
 } else {
     header('Location:login.php');
